@@ -62,6 +62,10 @@ All colors MUST be HSL.
     --cinema-dark: 210 40% 96%;
     --cinema-light: 222 47% 8%;
   }
+
+  .sepia {
+    filter: sepia(0.4) contrast(1.1);
+  }
 }
 
 @layer base {
@@ -75,7 +79,7 @@ All colors MUST be HSL.
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-satoshi;
+    @apply font-georgia font-bold;
   }
 }
 
@@ -97,5 +101,71 @@ All colors MUST be HSL.
   
   .text-glow {
     text-shadow: 0 0 20px hsl(var(--accent) / 0.6);
+  }
+
+  .film-grain {
+    position: relative;
+  }
+
+  .film-grain::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/src/assets/film-grain.png');
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .vignette {
+    position: relative;
+  }
+
+  .vignette::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  .curtain-reveal {
+    animation: curtainOpen 1.5s ease-out forwards;
+  }
+
+  @keyframes curtainOpen {
+    from {
+      clip-path: inset(0 50% 0 50%);
+    }
+    to {
+      clip-path: inset(0 0% 0 0%);
+    }
+  }
+
+  .spotlight {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
   }
 }

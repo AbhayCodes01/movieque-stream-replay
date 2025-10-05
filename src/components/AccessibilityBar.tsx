@@ -1,32 +1,26 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Accessibility, Globe, DollarSign } from "lucide-react";
+import { Accessibility, DollarSign } from "lucide-react";
 
-const languages = ["English", "Spanish", "French", "German", "Hindi", "Japanese", "Korean"];
 const currencies = ["USD", "EUR", "GBP", "INR", "JPY"];
 
 export const AccessibilityBar = () => {
-  const [colorMode, setColorMode] = useState<"normal" | "colorblind" | "inverted">("normal");
-  const [language, setLanguage] = useState("English");
+  const [colorMode, setColorMode] = useState<"normal" | "colorblind" | "inverted" | "sepia">("normal");
   const [currency, setCurrency] = useState("USD");
 
-  const handleColorModeChange = (mode: "normal" | "colorblind" | "inverted") => {
+  const handleColorModeChange = (mode: "normal" | "colorblind" | "inverted" | "sepia") => {
     setColorMode(mode);
-    if (mode === "colorblind") {
-      document.documentElement.classList.add("colorblind");
-      document.documentElement.classList.remove("inverted");
-    } else if (mode === "inverted") {
-      document.documentElement.classList.add("inverted");
-      document.documentElement.classList.remove("colorblind");
-    } else {
-      document.documentElement.classList.remove("colorblind", "inverted");
+    document.documentElement.classList.remove("colorblind", "inverted", "sepia");
+    
+    if (mode !== "normal") {
+      document.documentElement.classList.add(mode);
     }
   };
 
   return (
-    <div className="fixed top-4 right-4 z-40 flex gap-3 items-center bg-card/80 backdrop-blur-sm p-3 rounded-lg border border-accent/20">
-      <div className="flex gap-2">
+    <div className="fixed top-4 right-4 z-40 flex flex-wrap gap-2 items-center bg-card/80 backdrop-blur-sm p-3 rounded-lg border border-accent/20 max-w-[95vw] md:max-w-none">
+      <div className="flex gap-2 flex-wrap">
         <Button
           size="sm"
           variant={colorMode === "normal" ? "default" : "outline"}
@@ -52,21 +46,15 @@ export const AccessibilityBar = () => {
         >
           Inverted
         </Button>
+        <Button
+          size="sm"
+          variant={colorMode === "sepia" ? "default" : "outline"}
+          onClick={() => handleColorModeChange("sepia")}
+          className={colorMode === "sepia" ? "cinema-gradient" : ""}
+        >
+          Sepia
+        </Button>
       </div>
-
-      <Select value={language} onValueChange={setLanguage}>
-        <SelectTrigger className="w-[130px]">
-          <Globe className="w-4 h-4 mr-2" />
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {languages.map((lang) => (
-            <SelectItem key={lang} value={lang}>
-              {lang}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
 
       <Select value={currency} onValueChange={setCurrency}>
         <SelectTrigger className="w-[100px]">

@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         montserrat: ['Montserrat', 'sans-serif'],
-        satoshi: ['Satoshi', 'sans-serif'],
+        georgia: ['Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

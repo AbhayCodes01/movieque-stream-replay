@@ -49,21 +49,22 @@ export const Testimonials = () => {
   const currentTestimonial = testimonialCategories[activeCategory][currentIndex];
 
   return (
-    <section className="py-24 px-6 bg-card/50">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-6 bg-card/50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/src/assets/film-grain.png')] opacity-5 pointer-events-none"></div>
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-5xl font-bold text-center mb-4">What People Say</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">What People Say</h2>
+          <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">
             Trusted by millions worldwide
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12">
           {(Object.keys(testimonialCategories) as CategoryKey[]).map((category) => (
             <Button
               key={category}
@@ -73,6 +74,7 @@ export const Testimonials = () => {
                 setCurrentIndex(0);
               }}
               className={activeCategory === category ? "cinema-gradient" : ""}
+              size="sm"
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </Button>
@@ -92,16 +94,16 @@ export const Testimonials = () => {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="p-12 bg-card border-accent/20 hover:border-accent/50 transition-all glow-accent">
-                <Quote className="w-12 h-12 text-accent mb-6" />
-                <p className="text-2xl mb-6 italic">{currentTestimonial.quote}</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xl font-semibold text-accent">
+              <Card className="p-8 md:p-12 bg-card border-accent/20 hover:border-accent/50 transition-all glow-accent">
+                <Quote className="w-10 md:w-12 h-10 md:h-12 text-accent mb-4 md:mb-6" />
+                <p className="text-lg md:text-2xl mb-4 md:mb-6 italic">{currentTestimonial.quote}</p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <p className="text-lg md:text-xl font-semibold text-accent">
                     — {currentTestimonial.name}
                   </p>
                   <div className="flex gap-1">
                     {Array.from({ length: currentTestimonial.rating }).map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                      <Star key={i} className="w-4 md:w-5 h-4 md:h-5 fill-accent text-accent" />
                     ))}
                   </div>
                 </div>
